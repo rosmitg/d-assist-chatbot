@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="LLaMA Chatbot", layout="centered")
+st.set_page_config(page_title="Deloitte Chatbot", layout="centered")
 
 # --- LOGIN AUTHENTICATION ---
 if "authenticated" not in st.session_state:
@@ -25,6 +25,15 @@ if not st.session_state.authenticated:
     st.stop()
 
 role = st.session_state.role
+
+# Add logout UI at the top of the sidebar
+with st.sidebar:
+    st.markdown(f"👤 Logged in as: **{role.capitalize()}**")
+    if st.button("🚪 Logout"):
+        for key in list(st.session_state.keys()):
+            del st.session_state[key]
+        st.experimental_rerun()
+
 
 # --- SESSION SETUP ---
 if "active_topic" not in st.session_state:
